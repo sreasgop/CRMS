@@ -38,7 +38,6 @@ export const AttendanceMarkingView: React.FC = () => {
   const total = activeSession.entries.length;
   const presentCount = activeSession.entries.filter((e) => e.status === 'PRESENT').length;
   const absentCount = activeSession.entries.filter((e) => e.status === 'ABSENT').length;
-  const lateCount = activeSession.entries.filter((e) => e.status === 'LATE').length;
 
   const presentPercentage = total > 0 ? Math.round((presentCount / total) * 100) : 0;
 
@@ -168,7 +167,6 @@ export const AttendanceMarkingView: React.FC = () => {
         {filteredEntries.map((entry) => {
           const isPresent = entry.status === 'PRESENT';
           const isAbsent = entry.status === 'ABSENT';
-          const isLate = entry.status === 'LATE';
 
           return (
             <div
@@ -177,9 +175,7 @@ export const AttendanceMarkingView: React.FC = () => {
               className={`cursor-pointer border rounded-2xl p-2.5 sm:p-3.5 transition-all duration-150 relative select-none flex flex-col justify-between h-32 sm:h-36 ${
                 isPresent
                   ? 'bg-white border-[#e0e0e0] hover:border-[#0066cc]'
-                  : isAbsent
-                  ? 'bg-rose-50/70 border-rose-300 hover:border-rose-500 shadow-sm'
-                  : 'bg-amber-50/70 border-amber-300'
+                  : 'bg-rose-50/70 border-rose-300 hover:border-rose-500 shadow-sm'
               }`}
             >
               {/* Roll Number Top Header */}
@@ -188,9 +184,7 @@ export const AttendanceMarkingView: React.FC = () => {
                   className={`text-[11px] sm:text-xs font-bold px-1.5 py-0.5 rounded-full font-mono ${
                     isPresent
                       ? 'bg-[#0066cc]/10 text-[#0066cc]'
-                      : isAbsent
-                      ? 'bg-rose-600 text-white'
-                      : 'bg-amber-600 text-white'
+                      : 'bg-rose-600 text-white'
                   }`}
                 >
                   {entry.studentRollNumber}
@@ -198,10 +192,8 @@ export const AttendanceMarkingView: React.FC = () => {
 
                 {isPresent ? (
                   <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600 shrink-0" />
-                ) : isAbsent ? (
-                  <XCircle className="w-3.5 h-3.5 text-rose-600 shrink-0" />
                 ) : (
-                  <Clock className="w-3.5 h-3.5 text-amber-600 shrink-0" />
+                  <XCircle className="w-3.5 h-3.5 text-rose-600 shrink-0" />
                 )}
               </div>
 
@@ -213,7 +205,7 @@ export const AttendanceMarkingView: React.FC = () => {
               </div>
 
               {/* Touch-Friendly Status Action Buttons */}
-              <div className="flex items-center gap-1 pt-1 border-t border-black/5" onClick={(e) => e.stopPropagation()}>
+              <div className="flex items-center gap-1.5 pt-1 border-t border-black/5" onClick={(e) => e.stopPropagation()}>
                 <button
                   onClick={() => updateEntryStatus(entry.studentId, 'PRESENT')}
                   className={`flex-1 text-[11px] font-bold py-1.5 rounded-md transition-all ${
@@ -233,16 +225,6 @@ export const AttendanceMarkingView: React.FC = () => {
                   }`}
                 >
                   A
-                </button>
-                <button
-                  onClick={() => updateEntryStatus(entry.studentId, 'LATE')}
-                  className={`flex-1 text-[11px] font-bold py-1.5 rounded-md transition-all ${
-                    isLate
-                      ? 'bg-amber-600 text-white shadow-xs'
-                      : 'bg-black/5 text-[#7a7a7a] active:bg-amber-200 hover:bg-amber-100 hover:text-amber-700'
-                  }`}
-                >
-                  L
                 </button>
               </div>
             </div>

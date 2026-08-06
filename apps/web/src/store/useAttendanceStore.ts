@@ -86,7 +86,7 @@ export const useAttendanceStore = create<AttendanceState>()(
         const updatedEntries = active.entries.map((e) => {
           if (e.studentId === studentId) {
             const nextStatus: AttendanceStatus =
-              e.status === 'PRESENT' ? 'ABSENT' : e.status === 'ABSENT' ? 'LATE' : 'PRESENT';
+              e.status === 'PRESENT' ? 'ABSENT' : 'PRESENT';
             return { ...e, status: nextStatus };
           }
           return e;
