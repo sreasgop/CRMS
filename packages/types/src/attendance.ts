@@ -9,6 +9,7 @@ export const AttendanceEntrySchema = z.object({
   studentId: z.string(),
   studentRollNumber: z.string(),
   studentName: z.string(),
+  universityId: z.string().optional(),
   status: AttendanceStatusSchema,
   remarks: z.string().optional(),
   updatedAt: z.string().datetime().optional(),

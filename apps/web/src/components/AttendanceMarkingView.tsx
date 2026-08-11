@@ -168,6 +168,10 @@ export const AttendanceMarkingView: React.FC = () => {
           const isPresent = entry.status === 'PRESENT';
           const isAbsent = entry.status === 'ABSENT';
 
+          const studentObj = studentMap.get(entry.studentId);
+          const univId = entry.universityId || studentObj?.universityId || '';
+          const fourDigitId = univId ? (univId.length >= 4 ? univId.slice(-4) : univId) : '';
+
           return (
             <div
               key={entry.id}
@@ -178,17 +182,31 @@ export const AttendanceMarkingView: React.FC = () => {
                   : 'bg-rose-50/70 border-rose-300 hover:border-rose-500 shadow-sm'
               }`}
             >
-              {/* Roll Number Top Header */}
+              {/* Roll Number & 4-Digit ID Top Header */}
               <div className="flex items-center justify-between gap-1">
-                <span
-                  className={`text-[11px] sm:text-xs font-bold px-1.5 py-0.5 rounded-full font-mono ${
-                    isPresent
-                      ? 'bg-[#0066cc]/10 text-[#0066cc]'
-                      : 'bg-rose-600 text-white'
-                  }`}
-                >
-                  {entry.studentRollNumber}
-                </span>
+                <div className="flex items-center gap-1 overflow-hidden min-w-0">
+                  <span
+                    className={`text-[10px] sm:text-xs font-bold px-1.5 py-0.5 rounded-full font-mono shrink-0 ${
+                      isPresent
+                        ? 'bg-[#0066cc]/10 text-[#0066cc]'
+                        : 'bg-rose-600 text-white'
+                    }`}
+                  >
+                    #{entry.studentRollNumber}
+                  </span>
+                  {fourDigitId && (
+                    <span
+                      className={`text-[10px] sm:text-[11px] font-bold font-mono px-1 py-0.5 rounded border truncate ${
+                        isPresent
+                          ? 'bg-slate-100 text-[#333] border-slate-200'
+                          : 'bg-rose-100 text-rose-950 border-rose-200'
+                      }`}
+                      title={`Full ID: ${univId}`}
+                    >
+                      {fourDigitId}
+                    </span>
+                  )}
+                </div>
 
                 {isPresent ? (
                   <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600 shrink-0" />

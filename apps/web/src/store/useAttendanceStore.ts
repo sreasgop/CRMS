@@ -43,6 +43,7 @@ export const useAttendanceStore = create<AttendanceState>()(
           studentId: s.id,
           studentRollNumber: s.rollNumber,
           studentName: s.name,
+          universityId: s.universityId,
           status: 'PRESENT',
         }));
 
